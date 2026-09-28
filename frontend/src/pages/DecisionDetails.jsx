@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
@@ -9,6 +10,12 @@ import {
   ShieldCheck,
   FileText,
   Users,
+  MessageCircle,
+  Send,
+  Clock3,
+  Brain,
+  Loader2,
+  ExternalLink,
 } from "lucide-react";
 
 function DecisionDetails({ decisions }) {
@@ -17,6 +24,11 @@ function DecisionDetails({ decisions }) {
   const decision = decisions.find(
     (item) => item.id === id
   );
+
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [askLoading, setAskLoading] = useState(false);
+  const [askError, setAskError] = useState("");
 
   if (!decision) {
     return (
@@ -38,6 +50,130 @@ function DecisionDetails({ decisions }) {
   }
 
   const isReview = decision.decayDetected;
+
+  /*
+    ========================================
+    ASK DECISIONTRACE
+    ========================================
+  */
+
+  async function handleAsk(event) {
+    event.preventDefault();
+
+    const trimmedQuestion = question.trim();
+
+    if (!trimmedQuestion) {
+      return;
+    }
+
+    setAskLoading(true);
+    setAskError("");
+    setAnswer("");
+
+    try {
+      const apiUrl =
+        import.meta.env.VITE_API_URL ||
+        "http://127.0.0.1:8000";
+
+      const response = await fetch(`${apiUrl}/ask/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question: trimmedQuestion,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Request failed with status ${response.status}`
+        );
+      }
+
+      const data = await response.json();
+
+      setAnswer(
+        data.answer ||
+          "DecisionTrace returned an empty answer."
+      );
+    } catch (error) {
+      console.error("Ask DecisionTrace error:", error);
+
+      setAskError(
+        "Unable to connect to DecisionTrace right now. Make sure the backend is running."
+      );
+    } finally {
+      setAskLoading(false);
+    }
+  }
+
+  function askPreset(text) {
+    setQuestion(text);
+  }
+
+  /*
+    ========================================
+    TIMELINE DATA
+    ========================================
+  */
+
+  const timelineItems = [
+    {
+      icon: <CheckCircle2 size={16} />,
+      title: "Decision created",
+      description:
+        decision.description || decision.title,
+      date: decision.date,
+      type: "decision",
+    },
+    {
+      icon: <ShieldCheck size={16} />,
+      title: "Reason recorded",
+      description:
+        decision.reason ||
+        "No reasoning has been recorded.",
+      date: decision.date,
+      type: "reason",
+    },
+    ...(decision.assumptions?.length > 0
+      ? [
+          {
+            icon: <AlertTriangle size={16} />,
+            title: "Assumptions recorded",
+            description:
+              decision.assumptions.join(" • "),
+            date: decision.date,
+            type: "assumption",
+          },
+        ]
+      : []),
+    ...(decision.evidence?.length > 0
+      ? [
+          {
+            icon: <FileText size={16} />,
+            title: "Supporting evidence added",
+            description:
+              decision.evidence.join(" • "),
+            date: decision.date,
+            type: "evidence",
+          },
+        ]
+      : []),
+    ...(isReview
+      ? [
+          {
+            icon: <AlertTriangle size={16} />,
+            title: "Potential decision decay detected",
+            description:
+              decision.decayMessage ||
+              "An assumption behind this decision may have changed.",
+            date: "Review required",
+            type: "decay",
+          },
+        ]
+      : []),
+  ];
 
   return (
     <div className="page decision-details-page">
@@ -94,9 +230,6 @@ function DecisionDetails({ decisions }) {
 
         </div>
 
-
-        {/* STATUS */}
-
         <div
           className={`decision-health ${
             isReview
@@ -118,6 +251,161 @@ function DecisionDetails({ decisions }) {
         </div>
 
       </div>
+
+
+      {/* =========================
+          ASK DECISIONTRACE
+      ========================= */}
+
+      <section className="ask-decisiontrace-card">
+
+        <div className="ask-card-header">
+
+          <div className="ask-card-icon">
+            <MessageCircle size={20} />
+          </div>
+
+          <div>
+            <div className="eyebrow">
+              AI DECISION MEMORY
+            </div>
+
+            <h2>
+              Ask DecisionTrace
+            </h2>
+
+            <p>
+              Ask questions about this decision,
+              its reasoning, assumptions, or evidence.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div className="ask-suggestions">
+
+          <button
+            type="button"
+            onClick={() =>
+              askPreset(
+                `Why did we choose ${decision.title}?`
+              )
+            }
+          >
+            Why did we choose this?
+          </button>
+
+          <button
+            type="button"
+            onClick={() =>
+              askPreset(
+                "What assumptions were made?"
+              )
+            }
+          >
+            What assumptions were made?
+          </button>
+
+          <button
+            type="button"
+            onClick={() =>
+              askPreset(
+                "What evidence supported this decision?"
+              )
+            }
+          >
+            Show supporting evidence
+          </button>
+
+        </div>
+
+
+        <form
+          className="ask-form"
+          onSubmit={handleAsk}
+        >
+
+          <textarea
+            value={question}
+            onChange={(event) =>
+              setQuestion(event.target.value)
+            }
+            placeholder="Ask DecisionTrace a question..."
+            rows={3}
+          />
+
+          <div className="ask-form-footer">
+
+            <span>
+              DecisionTrace will search the
+              organization's decision memory.
+            </span>
+
+            <button
+              type="submit"
+              className="ask-button"
+              disabled={
+                askLoading ||
+                !question.trim()
+              }
+            >
+              {askLoading ? (
+                <>
+                  <Loader2
+                    size={16}
+                    className="spin"
+                  />
+                  Thinking...
+                </>
+              ) : (
+                <>
+                  Ask
+                  <Send size={15} />
+                </>
+              )}
+            </button>
+
+          </div>
+
+        </form>
+
+
+        {askError && (
+          <div className="ask-error">
+            <AlertTriangle size={17} />
+            <span>{askError}</span>
+          </div>
+        )}
+
+
+        {answer && (
+          <div className="ask-answer">
+
+            <div className="answer-header">
+              <div className="answer-icon">
+                <Brain size={17} />
+              </div>
+
+              <div>
+                <strong>
+                  DecisionTrace
+                </strong>
+
+                <span>
+                  AI-generated decision context
+                </span>
+              </div>
+            </div>
+
+            <p>
+              {answer}
+            </p>
+
+          </div>
+        )}
+
+      </section>
 
 
       {/* =========================
@@ -274,22 +562,95 @@ function DecisionDetails({ decisions }) {
 
 
       {/* =========================
-          EVIDENCE
+          TIMELINE / EVIDENCE
+      ========================= */}
+
+      <section className="detail-section timeline-section">
+
+        <div className="detail-section-header">
+
+          <div className="section-icon blue">
+            <Clock3 size={17} />
+          </div>
+
+          <div>
+            <h2>
+              Timeline / Evidence
+            </h2>
+
+            <p>
+              How this decision was formed and
+              what happened afterward.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div className="decision-timeline">
+
+          {timelineItems.map(
+            (item, index) => (
+              <div
+                className={`timeline-item timeline-${item.type}`}
+                key={`${item.title}-${index}`}
+              >
+
+                <div className="timeline-marker">
+                  {item.icon}
+                </div>
+
+                <div className="timeline-content">
+
+                  <div className="timeline-top">
+
+                    <strong>
+                      {item.title}
+                    </strong>
+
+                    <span>
+                      {item.date}
+                    </span>
+
+                  </div>
+
+                  <p>
+                    {item.description}
+                  </p>
+
+                </div>
+
+              </div>
+            )
+          )}
+
+        </div>
+
+      </section>
+
+
+      {/* =========================
+          SUPPORTING EVIDENCE
       ========================= */}
 
       <section className="detail-section">
 
         <div className="detail-section-header">
+
           <div className="section-icon green">
             <FileText size={17} />
           </div>
 
           <div>
-            <h2>Supporting evidence</h2>
+            <h2>
+              Supporting evidence
+            </h2>
+
             <p>
               Information used to support this decision.
             </p>
           </div>
+
         </div>
 
         {decision.evidence?.length > 0 ? (
@@ -303,6 +664,11 @@ function DecisionDetails({ decisions }) {
                 >
                   <FileText size={15} />
                   <span>{evidence}</span>
+
+                  <ExternalLink
+                    size={13}
+                    className="evidence-link-icon"
+                  />
                 </div>
               )
             )}
@@ -325,6 +691,7 @@ function DecisionDetails({ decisions }) {
         <section className="detail-section">
 
           <div className="detail-section-header">
+
             <div className="section-icon blue">
               <Users size={17} />
             </div>
@@ -335,6 +702,7 @@ function DecisionDetails({ decisions }) {
                 People and teams involved in the decision.
               </p>
             </div>
+
           </div>
 
           <div className="stakeholder-list">
@@ -350,6 +718,55 @@ function DecisionDetails({ decisions }) {
                 </span>
               )
             )}
+
+          </div>
+
+        </section>
+      )}
+
+
+      {/* =========================
+          DECISION DECAY
+      ========================= */}
+
+      {isReview && (
+        <section className="decision-decay-alert">
+
+          <div className="decay-alert-icon">
+            <AlertTriangle size={21} />
+          </div>
+
+          <div className="decay-alert-content">
+
+            <div className="eyebrow">
+              POTENTIAL DECISION DECAY
+            </div>
+
+            <h2>
+              This decision may need review
+            </h2>
+
+            <p>
+              {decision.decayMessage ||
+                "An assumption behind this decision may no longer be valid."}
+            </p>
+
+            <button
+              className="review-action-button"
+              onClick={() =>
+                alert(
+                  "Decision review started. Backend integration will handle this action later."
+                )
+              }
+            >
+              Review decision
+              <ArrowLeft
+                size={15}
+                style={{
+                  transform: "rotate(180deg)",
+                }}
+              />
+            </button>
 
           </div>
 
@@ -387,7 +804,7 @@ function DecisionDetails({ decisions }) {
 
           <h2>
             {isReview
-              ? "This decision may need review"
+              ? "Potential change detected"
               : "This decision is currently healthy"}
           </h2>
 
@@ -396,25 +813,6 @@ function DecisionDetails({ decisions }) {
               ? decision.decayMessage
               : "No changes to the assumptions behind this decision have been detected."}
           </p>
-
-          {isReview && (
-            <button
-              className="review-action-button"
-              onClick={() =>
-                alert(
-                  "Decision review started. Backend integration will handle this action later."
-                )
-              }
-            >
-              Review decision
-              <ArrowLeft
-                size={15}
-                style={{
-                  transform: "rotate(180deg)",
-                }}
-              />
-            </button>
-          )}
 
         </div>
 
