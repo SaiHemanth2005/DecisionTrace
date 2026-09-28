@@ -30,8 +30,9 @@ app.include_router(
 )
 
 
-@app.get("/")
-def root():
+@app.get("/health")
+def health_check():
     return {
-        "message": "DecisionTrace backend is running"
+        "status": "ok",
+        "service": "DecisionTrace backend"
     }
