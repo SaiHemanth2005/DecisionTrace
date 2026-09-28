@@ -1,26 +1,33 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from models.schemas import ReviewRequest, ReviewResponse
 from ai.decay_detector import DecayDetector
 
 router = APIRouter()
 
-detector = DecayDetector()
-
 
 @router.post("/", response_model=ReviewResponse)
 def review_decision(request: ReviewRequest):
 
-    detector.add_new_information(
-        request.new_information
-    )
+    try:
+        detector = DecayDetector()
 
-    result = detector.review_decisions(
-        request.new_information
-    )
+        detector.add_new_information(
+            request.new_information
+        )
 
-    return ReviewResponse(
-        message="Decision review completed",
-        review_required=True,
-        analysis=result
-    )
+        result = detector.review_decisions(
+            request.new_information
+        )
+
+        return ReviewResponse(
+            message="Decision review completed",
+            review_required=True,
+            analysis=result
+        )
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=503,
+            detail=str(error)
+        )
