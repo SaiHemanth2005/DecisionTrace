@@ -20,6 +20,7 @@ def review_decision(request: ReviewRequest):
     )
 
     return ReviewResponse(
-        message=result,
-        review_required=True
+        message="Decision review completed",
+        review_required=True,
+        analysis=result
     )
