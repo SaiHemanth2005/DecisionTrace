@@ -1,26 +1,35 @@
 from fastapi import APIRouter
 
 from models.schemas import DecisionRequest, DecisionResponse
+from ai.decision_agent import DecisionAgent
 
 router = APIRouter()
+
+agent = DecisionAgent()
 
 decisions = []
 
 
 @router.post("/", response_model=DecisionResponse)
 def create_decision(request: DecisionRequest):
-    decision_data = {
+    result = agent.save_decision(
+        decision=request.decision,
+        reason=request.reason,
+        assumptions=request.assumptions,
+        alternatives=request.alternatives,
+        stakeholders=request.stakeholders
+    )
+
+    decisions.append({
         "decision": request.decision,
         "reason": request.reason,
         "assumptions": request.assumptions,
         "alternatives": request.alternatives,
         "stakeholders": request.stakeholders
-    }
-
-    decisions.append(decision_data)
+    })
 
     return DecisionResponse(
-        message="Decision created successfully",
+        message=result["message"],
         decision=request.decision
     )
 
