@@ -2,7 +2,11 @@ from pydantic import BaseModel
 
 
 class DecisionRequest(BaseModel):
-    content: str
+    decision: str
+    reason: str
+    assumptions: list[str]
+    alternatives: list[str]
+    stakeholders: list[str]
 
 
 class DecisionResponse(BaseModel):
@@ -19,7 +23,6 @@ class AskResponse(BaseModel):
 
 
 class ReviewRequest(BaseModel):
-    decision: str
     new_information: str
 
 
