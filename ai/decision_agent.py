@@ -1,4 +1,4 @@
-from hindsight_service import HindsightService
+from ai.hindsight_service import HindsightService
 
 
 class DecisionAgent:
