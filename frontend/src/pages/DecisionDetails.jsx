@@ -10,10 +10,10 @@ import {
   ShieldCheck,
   FileText,
   Users,
-  MessageCircle,
-  Send,
   Clock3,
+  MessageCircle,
   Brain,
+  Send,
   Loader2,
   ExternalLink,
 } from "lucide-react";
@@ -98,7 +98,10 @@ function DecisionDetails({ decisions }) {
           "DecisionTrace returned an empty answer."
       );
     } catch (error) {
-      console.error("Ask DecisionTrace error:", error);
+      console.error(
+        "Ask DecisionTrace error:",
+        error
+      );
 
       setAskError(
         "Unable to connect to DecisionTrace right now. Make sure the backend is running."
@@ -114,7 +117,7 @@ function DecisionDetails({ decisions }) {
 
   /*
     ========================================
-    TIMELINE DATA
+    TIMELINE / EVIDENCE DATA
     ========================================
   */
 
@@ -127,6 +130,7 @@ function DecisionDetails({ decisions }) {
       date: decision.date,
       type: "decision",
     },
+
     {
       icon: <ShieldCheck size={16} />,
       title: "Reason recorded",
@@ -136,6 +140,7 @@ function DecisionDetails({ decisions }) {
       date: decision.date,
       type: "reason",
     },
+
     ...(decision.assumptions?.length > 0
       ? [
           {
@@ -148,6 +153,25 @@ function DecisionDetails({ decisions }) {
           },
         ]
       : []),
+
+    ...(decision.alternatives?.length > 0
+      ? [
+          {
+            icon: <FolderKanban size={16} />,
+            title: "Alternatives considered",
+            description:
+              decision.alternatives
+                .map(
+                  (alternative) =>
+                    alternative.name
+                )
+                .join(" • "),
+            date: decision.date,
+            type: "alternative",
+          },
+        ]
+      : []),
+
     ...(decision.evidence?.length > 0
       ? [
           {
@@ -160,11 +184,13 @@ function DecisionDetails({ decisions }) {
           },
         ]
       : []),
+
     ...(isReview
       ? [
           {
             icon: <AlertTriangle size={16} />,
-            title: "Potential decision decay detected",
+            title:
+              "Potential decision decay detected",
             description:
               decision.decayMessage ||
               "An assumption behind this decision may have changed.",
@@ -178,9 +204,9 @@ function DecisionDetails({ decisions }) {
   return (
     <div className="page decision-details-page">
 
-      {/* =========================
+      {/* ========================================
           BACK
-      ========================= */}
+      ======================================== */}
 
       <Link
         to="/decisions"
@@ -191,9 +217,9 @@ function DecisionDetails({ decisions }) {
       </Link>
 
 
-      {/* =========================
+      {/* ========================================
           HEADER
-      ========================= */}
+      ======================================== */}
 
       <div className="decision-detail-header">
 
@@ -203,9 +229,7 @@ function DecisionDetails({ decisions }) {
             DECISION #{decision.id}
           </div>
 
-          <h1>
-            {decision.title}
-          </h1>
+          <h1>{decision.title}</h1>
 
           <div className="decision-meta">
 
@@ -230,6 +254,7 @@ function DecisionDetails({ decisions }) {
 
         </div>
 
+
         <div
           className={`decision-health ${
             isReview
@@ -253,9 +278,9 @@ function DecisionDetails({ decisions }) {
       </div>
 
 
-      {/* =========================
+      {/* ========================================
           ASK DECISIONTRACE
-      ========================= */}
+      ======================================== */}
 
       <section className="ask-decisiontrace-card">
 
@@ -270,9 +295,7 @@ function DecisionDetails({ decisions }) {
               AI DECISION MEMORY
             </div>
 
-            <h2>
-              Ask DecisionTrace
-            </h2>
+            <h2>Ask DecisionTrace</h2>
 
             <p>
               Ask questions about this decision,
@@ -383,6 +406,7 @@ function DecisionDetails({ decisions }) {
           <div className="ask-answer">
 
             <div className="answer-header">
+
               <div className="answer-icon">
                 <Brain size={17} />
               </div>
@@ -396,11 +420,10 @@ function DecisionDetails({ decisions }) {
                   AI-generated decision context
                 </span>
               </div>
+
             </div>
 
-            <p>
-              {answer}
-            </p>
+            <p>{answer}</p>
 
           </div>
         )}
@@ -408,13 +431,14 @@ function DecisionDetails({ decisions }) {
       </section>
 
 
-      {/* =========================
-          DECISION SUMMARY
-      ========================= */}
+      {/* ========================================
+          DECISION
+      ======================================== */}
 
       <section className="detail-section">
 
         <div className="detail-section-header">
+
           <div className="section-icon blue">
             <FileText size={17} />
           </div>
@@ -425,22 +449,25 @@ function DecisionDetails({ decisions }) {
               What the team decided.
             </p>
           </div>
+
         </div>
 
         <div className="decision-summary">
-          {decision.description || decision.title}
+          {decision.description ||
+            decision.title}
         </div>
 
       </section>
 
 
-      {/* =========================
+      {/* ========================================
           WHY
-      ========================= */}
+      ======================================== */}
 
       <section className="detail-section">
 
         <div className="detail-section-header">
+
           <div className="section-icon purple">
             <ShieldCheck size={17} />
           </div>
@@ -451,6 +478,7 @@ function DecisionDetails({ decisions }) {
               The reasoning behind the decision.
             </p>
           </div>
+
         </div>
 
         <p className="detail-text">
@@ -461,13 +489,14 @@ function DecisionDetails({ decisions }) {
       </section>
 
 
-      {/* =========================
+      {/* ========================================
           ASSUMPTIONS
-      ========================= */}
+      ======================================== */}
 
       <section className="detail-section">
 
         <div className="detail-section-header">
+
           <div className="section-icon amber">
             <AlertTriangle size={17} />
           </div>
@@ -478,6 +507,7 @@ function DecisionDetails({ decisions }) {
               Conditions the decision was based on.
             </p>
           </div>
+
         </div>
 
         {decision.assumptions?.length > 0 ? (
@@ -505,13 +535,14 @@ function DecisionDetails({ decisions }) {
       </section>
 
 
-      {/* =========================
+      {/* ========================================
           ALTERNATIVES
-      ========================= */}
+      ======================================== */}
 
       <section className="detail-section">
 
         <div className="detail-section-header">
+
           <div className="section-icon slate">
             <FolderKanban size={17} />
           </div>
@@ -522,6 +553,7 @@ function DecisionDetails({ decisions }) {
               Other options evaluated by the team.
             </p>
           </div>
+
         </div>
 
         {decision.alternatives?.length > 0 ? (
@@ -533,6 +565,7 @@ function DecisionDetails({ decisions }) {
                   className="alternative-item"
                   key={index}
                 >
+
                   <div className="alternative-number">
                     {index + 1}
                   </div>
@@ -547,6 +580,7 @@ function DecisionDetails({ decisions }) {
                         "No reason recorded."}
                     </p>
                   </div>
+
                 </div>
               )
             )}
@@ -561,9 +595,9 @@ function DecisionDetails({ decisions }) {
       </section>
 
 
-      {/* =========================
+      {/* ========================================
           TIMELINE / EVIDENCE
-      ========================= */}
+      ======================================== */}
 
       <section className="detail-section timeline-section">
 
@@ -574,13 +608,11 @@ function DecisionDetails({ decisions }) {
           </div>
 
           <div>
-            <h2>
-              Timeline / Evidence
-            </h2>
+            <h2>Timeline / Evidence</h2>
 
             <p>
-              How this decision was formed and
-              what happened afterward.
+              How this decision was formed
+              and what happened afterward.
             </p>
           </div>
 
@@ -629,9 +661,9 @@ function DecisionDetails({ decisions }) {
       </section>
 
 
-      {/* =========================
+      {/* ========================================
           SUPPORTING EVIDENCE
-      ========================= */}
+      ======================================== */}
 
       <section className="detail-section">
 
@@ -642,9 +674,7 @@ function DecisionDetails({ decisions }) {
           </div>
 
           <div>
-            <h2>
-              Supporting evidence
-            </h2>
+            <h2>Supporting evidence</h2>
 
             <p>
               Information used to support this decision.
@@ -652,6 +682,7 @@ function DecisionDetails({ decisions }) {
           </div>
 
         </div>
+
 
         {decision.evidence?.length > 0 ? (
           <div className="evidence-list">
@@ -662,13 +693,29 @@ function DecisionDetails({ decisions }) {
                   className="evidence-item"
                   key={index}
                 >
-                  <FileText size={15} />
-                  <span>{evidence}</span>
+
+                  <div className="evidence-icon">
+                    <FileText size={15} />
+                  </div>
+
+                  <div className="evidence-content">
+
+                    <strong>
+                      {evidence}
+                    </strong>
+
+                    <span>
+                      Supporting information used
+                      during the decision.
+                    </span>
+
+                  </div>
 
                   <ExternalLink
-                    size={13}
+                    size={14}
                     className="evidence-link-icon"
                   />
+
                 </div>
               )
             )}
@@ -683,9 +730,9 @@ function DecisionDetails({ decisions }) {
       </section>
 
 
-      {/* =========================
+      {/* ========================================
           STAKEHOLDERS
-      ========================= */}
+      ======================================== */}
 
       {decision.stakeholders?.length > 0 && (
         <section className="detail-section">
@@ -698,8 +745,10 @@ function DecisionDetails({ decisions }) {
 
             <div>
               <h2>Stakeholders</h2>
+
               <p>
-                People and teams involved in the decision.
+                People and teams involved
+                in the decision.
               </p>
             </div>
 
@@ -725,9 +774,9 @@ function DecisionDetails({ decisions }) {
       )}
 
 
-      {/* =========================
+      {/* ========================================
           DECISION DECAY
-      ========================= */}
+      ======================================== */}
 
       {isReview && (
         <section className="decision-decay-alert">
@@ -760,10 +809,12 @@ function DecisionDetails({ decisions }) {
               }
             >
               Review decision
+
               <ArrowLeft
                 size={15}
                 style={{
-                  transform: "rotate(180deg)",
+                  transform:
+                    "rotate(180deg)",
                 }}
               />
             </button>
@@ -774,9 +825,9 @@ function DecisionDetails({ decisions }) {
       )}
 
 
-      {/* =========================
+      {/* ========================================
           DECISION HEALTH
-      ========================= */}
+      ======================================== */}
 
       <section
         className={`decision-health-card ${
