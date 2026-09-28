@@ -24,4 +24,3 @@ def review_decision(request: ReviewRequest):
         review_required=True,
         analysis=result
     )
-    
