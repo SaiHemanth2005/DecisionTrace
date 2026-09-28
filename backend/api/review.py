@@ -1,7 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 
 from models.schemas import ReviewRequest, ReviewResponse
-from ai.decay_detector import DecayDetector
 
 router = APIRouter()
 
@@ -9,25 +8,12 @@ router = APIRouter()
 @router.post("/", response_model=ReviewResponse)
 def review_decision(request: ReviewRequest):
 
-    try:
-        detector = DecayDetector()
-
-        detector.add_new_information(
-            request.new_information
+    return ReviewResponse(
+        message=f"Mock review for: {request.new_information}",
+        review_required=False,
+        analysis=(
+            "Mock analysis: new information received. "
+            "Real Hindsight-based decision decay analysis "
+            "requires a Hindsight API key."
         )
-
-        result = detector.review_decisions(
-            request.new_information
-        )
-
-        return ReviewResponse(
-            message="Decision review completed",
-            review_required=True,
-            analysis=result
-        )
-
-    except ValueError as error:
-        raise HTTPException(
-            status_code=503,
-            detail=str(error)
-        )
+    )
