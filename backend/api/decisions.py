@@ -1,27 +1,32 @@
 from fastapi import APIRouter
 
 from models.schemas import DecisionRequest, DecisionResponse
-from services.decision_agent import DecisionAgent
-from services.hindsight_service import HindsightService
 
 router = APIRouter()
 
-decision_agent = DecisionAgent()
-hindsight_service = HindsightService()
+decisions = []
 
 
 @router.post("/", response_model=DecisionResponse)
 def create_decision(request: DecisionRequest):
+    decision_data = {
+        "decision": request.decision,
+        "reason": request.reason,
+        "assumptions": request.assumptions,
+        "alternatives": request.alternatives,
+        "stakeholders": request.stakeholders
+    }
 
-    processed_decision = decision_agent.process_decision(
-        request.content
-    )
-
-    hindsight_service.store_decision(
-        request.content
-    )
+    decisions.append(decision_data)
 
     return DecisionResponse(
-        message="Decision stored successfully",
-        decision=processed_decision["decision"]
+        message="Decision created successfully",
+        decision=request.decision
     )
+
+
+@router.get("/")
+def get_decisions():
+    return {
+        "decisions": decisions
+    }
