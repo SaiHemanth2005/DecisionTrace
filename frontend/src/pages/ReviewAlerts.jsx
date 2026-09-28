@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  AlertTriangle,
-  ArrowRight,
-  ShieldAlert,
-  Sparkles,
-} from "lucide-react";
+import { AlertTriangle, ArrowRight } from "lucide-react";
 
 function ReviewAlerts({ decisions }) {
   const reviewDecisions = decisions.filter(
@@ -43,277 +38,102 @@ function ReviewAlerts({ decisions }) {
       }
 
       const result = await response.json();
-
       setAnalysis(result.analysis);
     } catch (error) {
       console.error(error);
-
-      setError(
-        "Could not connect to the DecisionTrace backend."
-      );
+      setError("Could not connect to the DecisionTrace backend.");
     } finally {
       setLoading(false);
     }
   }
 
-  function useExample() {
-    setNewInformation(
-      "Analytics requirements have decreased significantly."
-    );
-    setError("");
-  }
-
   return (
-    <div className="page review-alerts-page">
-
-      {/* =========================
-          PAGE HEADER
-      ========================= */}
-
-      <div className="page-header review-page-header">
+    <div className="page">
+      <div className="page-header">
         <div>
           <div className="eyebrow">DECISION HEALTH</div>
-
           <h1>Review Alerts</h1>
-
           <p>
-            Decisions whose assumptions may no longer match
-            current conditions.
+            Decisions whose assumptions may no longer match current
+            conditions.
           </p>
-        </div>
-
-        <div className="review-alert-summary">
-          <ShieldAlert size={17} />
-
-          <div>
-            <strong>{reviewDecisions.length}</strong>
-            <span>Need review</span>
-          </div>
         </div>
       </div>
 
+      <div className="content-card">
+        <h2>Check for Decision Decay</h2>
 
-      {/* =========================
-          DECAY CHECK
-      ========================= */}
+        <p>
+          Enter new information to check whether it may affect
+          previous decisions.
+        </p>
 
-      <section className="decay-check-card">
+        <textarea
+          value={newInformation}
+          onChange={(event) =>
+            setNewInformation(event.target.value)
+          }
+          placeholder="Example: Analytics requirements have decreased significantly."
+          rows={4}
+        />
 
-        <div className="decay-check-header">
+        <button
+          className="primary-button"
+          onClick={handleReview}
+          disabled={loading || !newInformation.trim()}
+        >
+          {loading ? "Checking..." : "Check Decisions"}
+        </button>
 
-          <div className="decay-check-icon">
-            <Sparkles size={20} />
-          </div>
-
-          <div>
-            <h2>Check for Decision Decay</h2>
-
-            <p>
-              Add new information and DecisionTrace will
-              check whether it may affect previous decisions.
-            </p>
-          </div>
-
-        </div>
-
-
-        <div className="decay-input-area">
-
-          <div className="decay-input-label">
-            <span>New information</span>
-
-            <button
-              type="button"
-              onClick={useExample}
-            >
-              Use example
-            </button>
-          </div>
-
-          <textarea
-            className="decay-input"
-            value={newInformation}
-            onChange={(event) =>
-              setNewInformation(event.target.value)
-            }
-            placeholder="Example: Analytics requirements have decreased significantly."
-            rows={5}
-          />
-
-          <div className="decay-input-footer">
-
-            <span>
-              DecisionTrace compares this information with
-              existing decision assumptions.
-            </span>
-
-            <button
-              type="button"
-              className="decay-check-button"
-              onClick={handleReview}
-              disabled={
-                loading || !newInformation.trim()
-              }
-            >
-              {loading ? (
-                <>
-                  <span className="button-spinner" />
-                  Checking...
-                </>
-              ) : (
-                <>
-                  Check Decisions
-                  <ArrowRight size={15} />
-                </>
-              )}
-            </button>
-
-          </div>
-
-        </div>
-
-
-        {/* ERROR */}
-
-        {error && (
-          <div className="decay-error">
-            <AlertTriangle size={16} />
-
-            <span>{error}</span>
-          </div>
-        )}
-
-
-        {/* ANALYSIS */}
+        {error && <p>{error}</p>}
 
         {analysis && (
-          <div className="decay-analysis">
-
-            <div className="decay-analysis-icon">
-              <ShieldAlert size={17} />
-            </div>
-
-            <div>
-              <strong>
-                Decision Decay Analysis
-              </strong>
-
-              <p>{analysis}</p>
-            </div>
-
+          <div className="alert-reason">
+            <strong>Decision Decay Analysis</strong>
+            <p>{analysis}</p>
           </div>
         )}
-
-      </section>
-
-
-      {/* =========================
-          REVIEW ALERTS
-      ========================= */}
-
-      <div className="review-alerts-section-header">
-
-        <div>
-          <div className="eyebrow">ATTENTION REQUIRED</div>
-
-          <h2>Decisions to review</h2>
-
-          <p>
-            These decisions have assumptions that may
-            no longer match current conditions.
-          </p>
-        </div>
-
-        <span className="review-count">
-          {reviewDecisions.length}
-        </span>
-
       </div>
 
-
       {reviewDecisions.length === 0 ? (
-
-        <div className="review-empty-card">
-
-          <div className="review-empty-icon">
-            <ShieldAlert size={22} />
-          </div>
-
+        <div className="content-card empty-large">
+          <AlertTriangle size={30} />
           <h2>No review alerts</h2>
-
-          <p>
-            All tracked decisions are currently healthy.
-          </p>
-
+          <p>All tracked decisions are currently healthy.</p>
         </div>
-
       ) : (
-
-        <div className="review-alert-list">
-
+        <div className="alert-list">
           {reviewDecisions.map((decision) => (
-
-            <article
-              className="review-alert-card"
+            <div
+              className="large-alert-card"
               key={decision.id}
             >
-
-              <div className="review-alert-icon">
-                <AlertTriangle size={20} />
+              <div className="large-alert-icon">
+                <AlertTriangle size={21} />
               </div>
 
-
-              <div className="review-alert-content">
-
-                <div className="review-alert-top">
-
-                  <span>
-                    DECISION #{decision.id}
-                  </span>
-
-                  <span className="review-status-pill">
-                    Review required
-                  </span>
-
-                </div>
-
+              <div className="large-alert-content">
+                <span>Decision #{decision.id}</span>
 
                 <h2>{decision.title}</h2>
 
-
-                <div className="review-reason">
-
-                  <div className="review-reason-label">
-                    <AlertTriangle size={14} />
-                    Why this was flagged
-                  </div>
-
-                  <p>
-                    {decision.decayMessage ||
-                      "The assumptions behind this decision may have changed."}
-                  </p>
-
+                <div className="alert-reason">
+                  <strong>Why this was flagged</strong>
+                  <p>{decision.decayMessage}</p>
                 </div>
-
 
                 <Link
                   to={`/decisions/${decision.id}`}
-                  className="review-decision-button"
+                  className="primary-button small"
                 >
                   Review Decision
                   <ArrowRight size={15} />
                 </Link>
-
               </div>
-
-            </article>
-
+            </div>
           ))}
-
         </div>
-
       )}
-
     </div>
   );
 }
