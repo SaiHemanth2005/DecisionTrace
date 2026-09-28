@@ -3044,3 +3044,1485 @@ main {
   }
 
 }
+
+
+/* ========================================
+   REVIEW ALERTS PAGE
+======================================== */
+
+.review-alerts-page {
+  width: 100%;
+  max-width: 1150px;
+}
+
+
+/* ========================================
+   DECAY CHECK CARD
+======================================== */
+
+.decay-check-card {
+  width: 100%;
+  box-sizing: border-box;
+
+  margin-top: 26px;
+  padding: 28px;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+
+/* Header */
+
+.decay-check-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  margin-bottom: 24px;
+}
+
+.decay-check-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: rgba(99, 102, 241, 0.12);
+  color: #818cf8;
+}
+
+.decay-check-header h2 {
+  margin: 2px 0 6px;
+
+  font-size: 20px;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+}
+
+.decay-check-header p {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* ========================================
+   INPUT AREA
+======================================== */
+
+.decay-input-wrapper {
+  width: 100%;
+  max-width: none;
+}
+
+
+/*
+  The !important here is intentional.
+  Your existing global textarea styling is
+  overriding the width of this textarea.
+*/
+
+.review-alerts-page .decay-input {
+  display: block !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  min-width: 0 !important;
+  min-height: 130px;
+
+  box-sizing: border-box;
+
+  padding: 16px 17px;
+
+  border: 1px solid var(--border);
+  border-radius: 11px;
+
+  background: var(--surface-soft);
+  color: var(--text);
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+
+  resize: vertical;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.review-alerts-page .decay-input:hover {
+  border-color: #39475a;
+}
+
+.review-alerts-page .decay-input:focus {
+  border-color: #6366f1;
+
+  background: var(--surface);
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.review-alerts-page .decay-input::placeholder {
+  color: var(--muted);
+}
+
+
+/* ========================================
+   INPUT FOOTER
+======================================== */
+
+.decay-input-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-top: 12px;
+}
+
+.decay-input-footer span {
+  color: var(--muted);
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+
+/* Button */
+
+.decay-check-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  min-width: 150px;
+  height: 40px;
+
+  padding: 0 16px;
+
+  border-radius: 9px;
+}
+
+
+/* ========================================
+   BACKEND ERROR
+======================================== */
+
+.decay-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 16px;
+  padding: 13px 15px;
+
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  border-radius: 10px;
+
+  background: rgba(239, 68, 68, 0.07);
+
+  color: #f87171;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.decay-error svg {
+  flex-shrink: 0;
+}
+
+
+/* ========================================
+   DECAY ANALYSIS RESULT
+======================================== */
+
+.decay-analysis {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  margin-top: 16px;
+  padding: 16px;
+
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 11px;
+
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.decay-analysis-icon {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: rgba(99, 102, 241, 0.13);
+  color: #818cf8;
+}
+
+.decay-analysis strong {
+  display: block;
+
+  font-size: 13px;
+}
+
+.decay-analysis p {
+  margin: 6px 0 0;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* ========================================
+   ACTIVE ALERTS HEADER
+======================================== */
+
+.review-alerts-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 32px 0 14px;
+}
+
+.review-alerts-heading h2 {
+  margin: 3px 0 0;
+
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.alert-count {
+  min-width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 8px;
+
+  border-radius: 8px;
+
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ========================================
+   ALERT CARDS
+======================================== */
+
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.large-alert-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 20px;
+
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 14px;
+
+  background: rgba(245, 158, 11, 0.045);
+}
+
+.large-alert-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+
+.large-alert-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.large-alert-content > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #c39235;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.large-alert-content h2 {
+  margin: 0 0 14px;
+
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.large-alert-content .alert-reason {
+  margin-bottom: 14px;
+}
+
+
+/* ========================================
+   LIGHT THEME
+======================================== */
+
+[data-theme="light"] .decay-check-card {
+  background: #ffffff;
+  border-color: #dfe5ec;
+}
+
+[data-theme="light"] .review-alerts-page .decay-input {
+  background: #f8fafc;
+  color: #18202b;
+  border-color: #dfe5ec;
+}
+
+[data-theme="light"] .review-alerts-page .decay-input:focus {
+  background: #ffffff;
+}
+
+[data-theme="light"] .decay-analysis {
+  background: #f5f7ff;
+}
+
+[data-theme="light"] .large-alert-card {
+  background: #fffaf0;
+  border-color: #ead8ad;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 700px) {
+
+  .decay-check-card {
+    padding: 20px;
+  }
+
+  .decay-input-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .decay-check-button {
+    width: 100%;
+  }
+
+  .large-alert-card {
+    flex-direction: column;
+  }
+}
+/* ========================================
+   DECAY INPUT
+======================================== */
+
+.decay-input-wrapper {
+  width: 100%;
+}
+
+.decay-input {
+  display: block;
+
+  width: 100%;
+  min-height: 120px;
+
+  box-sizing: border-box;
+
+  padding: 14px 16px;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  background: var(--surface-soft);
+  color: var(--text);
+
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+
+  resize: vertical;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.decay-input:focus {
+  border-color: #6366f1;
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.decay-input::placeholder {
+  color: var(--muted);
+}
+
+
+/* ========================================
+   INPUT FOOTER
+======================================== */
+
+.decay-input-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-top: 12px;
+}
+
+.decay-input-footer span {
+  color: var(--muted);
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.decay-check-button {
+  flex-shrink: 0;
+}
+
+
+/* ========================================
+   ERROR
+======================================== */
+
+.decay-error {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-top: 14px;
+  padding: 12px 14px;
+
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
+
+  background: rgba(239, 68, 68, 0.08);
+
+  color: #f87171;
+
+  font-size: 13px;
+}
+
+
+/* ========================================
+   DECAY ANALYSIS
+======================================== */
+
+.decay-analysis {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  margin-top: 16px;
+  padding: 16px;
+
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 11px;
+
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.decay-analysis-icon {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 9px;
+
+  background: rgba(99, 102, 241, 0.13);
+  color: #818cf8;
+}
+
+.decay-analysis strong {
+  display: block;
+
+  font-size: 13px;
+}
+
+.decay-analysis p {
+  margin: 6px 0 0;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* ========================================
+   ACTIVE ALERTS HEADER
+======================================== */
+
+.review-alerts-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 30px 0 14px;
+}
+
+.review-alerts-heading h2 {
+  margin: 3px 0 0;
+
+  font-size: 18px;
+}
+
+.alert-count {
+  min-width: 28px;
+  height: 28px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 8px;
+
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ========================================
+   EXISTING ALERT CARDS
+======================================== */
+
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.large-alert-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  padding: 20px;
+
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 14px;
+
+  background: rgba(245, 158, 11, 0.045);
+}
+
+.large-alert-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 11px;
+
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+
+.large-alert-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.large-alert-content > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #c39235;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.large-alert-content h2 {
+  margin: 0 0 14px;
+
+  font-size: 17px;
+}
+
+.large-alert-content .alert-reason {
+  margin-bottom: 14px;
+}
+
+
+/* ========================================
+   LIGHT THEME
+======================================== */
+
+[data-theme="light"] .decay-input {
+  background: #f8fafc;
+  color: #18202b;
+  border-color: #dfe5ec;
+}
+
+[data-theme="light"] .decay-check-card {
+  background: #ffffff;
+  border-color: #dfe5ec;
+}
+
+[data-theme="light"] .decay-analysis {
+  background: #f5f7ff;
+}
+
+[data-theme="light"] .large-alert-card {
+  background: #fffaf0;
+  border-color: #ead8ad;
+}
+
+
+/* ========================================
+   REVIEW ALERTS — MOBILE
+======================================== */
+
+@media (max-width: 700px) {
+
+  .decay-check-card {
+    padding: 18px;
+  }
+
+  .decay-input-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .decay-check-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .large-alert-card {
+    flex-direction: column;
+  }
+
+}
+
+/* =========================================================
+   REVIEW ALERTS — PROFESSIONAL UI
+========================================================= */
+
+.review-alerts-page {
+  max-width: 1180px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.review-page-header {
+  align-items: center;
+}
+
+.review-alert-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 120px;
+
+  padding: 10px 13px;
+
+  border: 1px solid #293442;
+  border-radius: 10px;
+
+  background: #111720;
+
+  color: #f0b84d;
+}
+
+.review-alert-summary svg {
+  flex-shrink: 0;
+}
+
+.review-alert-summary strong,
+.review-alert-summary span {
+  display: block;
+}
+
+.review-alert-summary strong {
+  color: #f3f6fa;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.review-alert-summary span {
+  margin-top: 4px;
+
+  color: #68778b;
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   DECAY CHECK CARD
+========================================================= */
+
+.decay-check-card {
+  width: 100%;
+
+  padding: 25px;
+
+  background: #111720;
+
+  border: 1px solid #283341;
+  border-radius: 14px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Header */
+
+.decay-check-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+
+  margin-bottom: 23px;
+}
+
+.decay-check-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(99, 102, 241, 0.12);
+  color: #818cf8;
+}
+
+.decay-check-header h2 {
+  margin: 1px 0 6px;
+
+  font-size: 19px;
+  letter-spacing: -0.3px;
+}
+
+.decay-check-header p {
+  max-width: 650px;
+
+  margin: 0;
+
+  color: #718095;
+
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.decay-input-area {
+  width: 100%;
+}
+
+.decay-input-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+}
+
+.decay-input-label > span {
+  color: #aeb9c7;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.decay-input-label button {
+  border: none;
+  background: transparent;
+
+  color: #6e9fe9;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.decay-input-label button:hover {
+  color: #91b8f5;
+}
+
+
+/*
+   IMPORTANT:
+   This selector overrides the generic textarea rules
+   elsewhere in App.css.
+*/
+
+.review-alerts-page .decay-input {
+  display: block;
+
+  width: 100% !important;
+  min-width: 0 !important;
+
+  min-height: 125px;
+
+  box-sizing: border-box;
+
+  padding: 14px 15px;
+
+  background: #0c1219 !important;
+
+  border: 1px solid #2b3745 !important;
+  border-radius: 9px !important;
+
+  color: #edf2f7 !important;
+
+  outline: none;
+
+  resize: vertical;
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.review-alerts-page .decay-input::placeholder {
+  color: #647286;
+}
+
+.review-alerts-page .decay-input:hover {
+  border-color: #3a4859 !important;
+}
+
+.review-alerts-page .decay-input:focus {
+  border-color: #4f8cff !important;
+
+  background: #0e151e !important;
+
+  box-shadow:
+    0 0 0 3px rgba(79, 140, 255, 0.10);
+}
+
+
+/* =========================================================
+   INPUT FOOTER
+========================================================= */
+
+.decay-input-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-top: 11px;
+}
+
+.decay-input-footer > span {
+  color: #5f6f83;
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+
+/* Check button */
+
+.decay-check-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  flex-shrink: 0;
+
+  min-width: 150px;
+  height: 39px;
+
+  padding: 0 15px;
+
+  border: 1px solid #477ed8;
+  border-radius: 8px;
+
+  background: #3974d2;
+  color: white;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.decay-check-button:hover:not(:disabled) {
+  background: #4680e3;
+  transform: translateY(-1px);
+}
+
+.decay-check-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+
+/* Loading spinner */
+
+.button-spinner {
+  width: 13px;
+  height: 13px;
+
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: white;
+
+  border-radius: 50%;
+
+  animation: review-spinner 0.7s linear infinite;
+}
+
+@keyframes review-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.decay-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 16px;
+  padding: 12px 14px;
+
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  border-radius: 9px;
+
+  background: rgba(239, 68, 68, 0.06);
+
+  color: #f87171;
+
+  font-size: 11px;
+}
+
+.decay-error svg {
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   ANALYSIS RESULT
+========================================================= */
+
+.decay-analysis {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+
+  margin-top: 16px;
+  padding: 15px;
+
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 10px;
+
+  background: rgba(99, 102, 241, 0.06);
+}
+
+.decay-analysis-icon {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: rgba(99, 102, 241, 0.13);
+  color: #818cf8;
+}
+
+.decay-analysis strong {
+  display: block;
+
+  font-size: 12px;
+}
+
+.decay-analysis p {
+  margin: 5px 0 0;
+
+  color: #8996a8;
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   REVIEW SECTION HEADER
+========================================================= */
+
+.review-alerts-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 32px 0 14px;
+}
+
+.review-alerts-section-header .eyebrow {
+  margin-bottom: 5px;
+}
+
+.review-alerts-section-header h2 {
+  margin: 0;
+
+  font-size: 18px;
+  letter-spacing: -0.25px;
+}
+
+.review-alerts-section-header p {
+  margin: 5px 0 0;
+
+  color: #68778b;
+
+  font-size: 11px;
+}
+
+.review-count {
+  min-width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #4a3a1e;
+  border-radius: 8px;
+
+  background: #211b11;
+  color: #eab54f;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ALERT LIST
+========================================================= */
+
+.review-alert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+/* =========================================================
+   ALERT CARD
+========================================================= */
+
+.review-alert-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 20px;
+
+  background: #12130f;
+
+  border: 1px solid #40351f;
+  border-radius: 13px;
+
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.review-alert-card:hover {
+  border-color: #685325;
+
+  transform: translateY(-1px);
+}
+
+
+/* Alert icon */
+
+.review-alert-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #302716;
+  color: #f0b84d;
+}
+
+
+/* Content */
+
+.review-alert-content {
+  flex: 1;
+  min-width: 0;
+}
+
+
+/* Top row */
+
+.review-alert-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 6px;
+}
+
+.review-alert-top > span:first-child {
+  color: #9b8351;
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.review-status-pill {
+  padding: 4px 7px;
+
+  border-radius: 5px;
+
+  background: #332817;
+  color: #eab54f;
+
+  font-size: 9px;
+  font-weight: 600;
+}
+
+
+/* Title */
+
+.review-alert-content h2 {
+  margin: 0 0 14px;
+
+  color: #f1f4f8;
+
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+
+/* Reason */
+
+.review-reason {
+  padding: 13px 14px;
+
+  margin-bottom: 14px;
+
+  background: #17150f;
+
+  border: 1px solid #332c20;
+  border-radius: 9px;
+}
+
+.review-reason-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #d1aa55;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.review-reason-label svg {
+  flex-shrink: 0;
+}
+
+.review-reason p {
+  margin: 7px 0 0;
+
+  color: #9b907b;
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+
+/* Review button */
+
+.review-decision-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 8px 12px;
+
+  border: 1px solid #477ed8;
+  border-radius: 7px;
+
+  background: #3974d2;
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  transition: 0.15s ease;
+}
+
+.review-decision-button:hover {
+  background: #4680e3;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.review-empty-card {
+  min-height: 220px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  background: #111720;
+
+  border: 1px solid #232d39;
+  border-radius: 13px;
+
+  text-align: center;
+}
+
+.review-empty-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: #153127;
+  color: #4fd09b;
+}
+
+.review-empty-card h2 {
+  margin: 13px 0 5px;
+
+  font-size: 15px;
+}
+
+.review-empty-card p {
+  margin: 0;
+
+  color: #68778b;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   LIGHT THEME
+========================================================= */
+
+[data-theme="light"] .review-alert-summary {
+  background: #ffffff;
+  border-color: #dfe5ec;
+}
+
+[data-theme="light"] .review-alert-summary strong {
+  color: #18202b;
+}
+
+[data-theme="light"] .decay-check-card {
+  background: #ffffff;
+  border-color: #dfe5ec;
+}
+
+[data-theme="light"] .decay-input-label > span {
+  color: #4f5e70;
+}
+
+[data-theme="light"] .review-alerts-page .decay-input {
+  background: #f8fafc !important;
+  border-color: #d3dce7 !important;
+  color: #18202b !important;
+}
+
+[data-theme="light"] .review-alerts-page .decay-input:focus {
+  background: #ffffff !important;
+}
+
+[data-theme="light"] .review-alerts-section-header h2 {
+  color: #18202b;
+}
+
+[data-theme="light"] .review-alerts-section-header p {
+  color: #718095;
+}
+
+[data-theme="light"] .review-count {
+  background: #fff8e8;
+  border-color: #ead8ad;
+}
+
+[data-theme="light"] .review-alert-card {
+  background: #fffaf0;
+  border-color: #ead8ad;
+}
+
+[data-theme="light"] .review-alert-content h2 {
+  color: #18202b;
+}
+
+[data-theme="light"] .review-reason {
+  background: #fffdf8;
+  border-color: #eadfca;
+}
+
+[data-theme="light"] .review-reason p {
+  color: #756b5a;
+}
+
+[data-theme="light"] .review-empty-card {
+  background: #ffffff;
+  border-color: #dfe5ec;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .review-page-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .decay-check-card {
+    padding: 20px;
+  }
+
+  .decay-input-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .decay-check-button {
+    width: 100%;
+  }
+
+  .review-alert-card {
+    flex-direction: column;
+  }
+
+  .review-alert-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .review-alerts-section-header {
+    align-items: flex-start;
+  }
+}

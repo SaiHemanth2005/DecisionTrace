@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AlertTriangle, ArrowRight } from "lucide-react";
+import {
+  AlertTriangle,
+  ArrowRight,
+  ShieldAlert,
+  Sparkles,
+} from "lucide-react";
 
 function ReviewAlerts({ decisions }) {
   const reviewDecisions = decisions.filter(
@@ -42,6 +47,7 @@ function ReviewAlerts({ decisions }) {
       setAnalysis(result.analysis);
     } catch (error) {
       console.error(error);
+
       setError(
         "Could not connect to the DecisionTrace backend."
       );
@@ -50,93 +56,264 @@ function ReviewAlerts({ decisions }) {
     }
   }
 
+  function useExample() {
+    setNewInformation(
+      "Analytics requirements have decreased significantly."
+    );
+    setError("");
+  }
+
   return (
-    <div className="page">
-      <div className="page-header">
+    <div className="page review-alerts-page">
+
+      {/* =========================
+          PAGE HEADER
+      ========================= */}
+
+      <div className="page-header review-page-header">
         <div>
           <div className="eyebrow">DECISION HEALTH</div>
+
           <h1>Review Alerts</h1>
+
           <p>
             Decisions whose assumptions may no longer match
             current conditions.
           </p>
         </div>
+
+        <div className="review-alert-summary">
+          <ShieldAlert size={17} />
+
+          <div>
+            <strong>{reviewDecisions.length}</strong>
+            <span>Need review</span>
+          </div>
+        </div>
       </div>
 
-      <div className="content-card">
-        <h2>Check for Decision Decay</h2>
 
-        <p>
-          Enter new information to check whether it may affect
-          previous decisions.
-        </p>
+      {/* =========================
+          DECAY CHECK
+      ========================= */}
 
-        <textarea
-          value={newInformation}
-          onChange={(event) =>
-            setNewInformation(event.target.value)
-          }
-          placeholder="Example: Analytics requirements have decreased significantly."
-          rows={4}
-        />
+      <section className="decay-check-card">
 
-        <button
-          className="primary-button"
-          onClick={handleReview}
-          disabled={loading || !newInformation.trim()}
-        >
-          {loading ? "Checking..." : "Check Decisions"}
-        </button>
+        <div className="decay-check-header">
 
-        {error && <p>{error}</p>}
+          <div className="decay-check-icon">
+            <Sparkles size={20} />
+          </div>
 
-        {analysis && (
-          <div className="alert-reason">
-            <strong>Decision Decay Analysis</strong>
-            <p>{analysis}</p>
+          <div>
+            <h2>Check for Decision Decay</h2>
+
+            <p>
+              Add new information and DecisionTrace will
+              check whether it may affect previous decisions.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div className="decay-input-area">
+
+          <div className="decay-input-label">
+            <span>New information</span>
+
+            <button
+              type="button"
+              onClick={useExample}
+            >
+              Use example
+            </button>
+          </div>
+
+          <textarea
+            className="decay-input"
+            value={newInformation}
+            onChange={(event) =>
+              setNewInformation(event.target.value)
+            }
+            placeholder="Example: Analytics requirements have decreased significantly."
+            rows={5}
+          />
+
+          <div className="decay-input-footer">
+
+            <span>
+              DecisionTrace compares this information with
+              existing decision assumptions.
+            </span>
+
+            <button
+              type="button"
+              className="decay-check-button"
+              onClick={handleReview}
+              disabled={
+                loading || !newInformation.trim()
+              }
+            >
+              {loading ? (
+                <>
+                  <span className="button-spinner" />
+                  Checking...
+                </>
+              ) : (
+                <>
+                  Check Decisions
+                  <ArrowRight size={15} />
+                </>
+              )}
+            </button>
+
+          </div>
+
+        </div>
+
+
+        {/* ERROR */}
+
+        {error && (
+          <div className="decay-error">
+            <AlertTriangle size={16} />
+
+            <span>{error}</span>
           </div>
         )}
+
+
+        {/* ANALYSIS */}
+
+        {analysis && (
+          <div className="decay-analysis">
+
+            <div className="decay-analysis-icon">
+              <ShieldAlert size={17} />
+            </div>
+
+            <div>
+              <strong>
+                Decision Decay Analysis
+              </strong>
+
+              <p>{analysis}</p>
+            </div>
+
+          </div>
+        )}
+
+      </section>
+
+
+      {/* =========================
+          REVIEW ALERTS
+      ========================= */}
+
+      <div className="review-alerts-section-header">
+
+        <div>
+          <div className="eyebrow">ATTENTION REQUIRED</div>
+
+          <h2>Decisions to review</h2>
+
+          <p>
+            These decisions have assumptions that may
+            no longer match current conditions.
+          </p>
+        </div>
+
+        <span className="review-count">
+          {reviewDecisions.length}
+        </span>
+
       </div>
 
+
       {reviewDecisions.length === 0 ? (
-        <div className="content-card empty-large">
-          <AlertTriangle size={30} />
+
+        <div className="review-empty-card">
+
+          <div className="review-empty-icon">
+            <ShieldAlert size={22} />
+          </div>
+
           <h2>No review alerts</h2>
-          <p>All tracked decisions are currently healthy.</p>
+
+          <p>
+            All tracked decisions are currently healthy.
+          </p>
+
         </div>
+
       ) : (
-        <div className="alert-list">
+
+        <div className="review-alert-list">
+
           {reviewDecisions.map((decision) => (
-            <div
-              className="large-alert-card"
+
+            <article
+              className="review-alert-card"
               key={decision.id}
             >
-              <div className="large-alert-icon">
-                <AlertTriangle size={21} />
+
+              <div className="review-alert-icon">
+                <AlertTriangle size={20} />
               </div>
 
-              <div className="large-alert-content">
-                <span>Decision #{decision.id}</span>
+
+              <div className="review-alert-content">
+
+                <div className="review-alert-top">
+
+                  <span>
+                    DECISION #{decision.id}
+                  </span>
+
+                  <span className="review-status-pill">
+                    Review required
+                  </span>
+
+                </div>
+
 
                 <h2>{decision.title}</h2>
 
-                <div className="alert-reason">
-                  <strong>Why this was flagged</strong>
-                  <p>{decision.decayMessage}</p>
+
+                <div className="review-reason">
+
+                  <div className="review-reason-label">
+                    <AlertTriangle size={14} />
+                    Why this was flagged
+                  </div>
+
+                  <p>
+                    {decision.decayMessage ||
+                      "The assumptions behind this decision may have changed."}
+                  </p>
+
                 </div>
+
 
                 <Link
                   to={`/decisions/${decision.id}`}
-                  className="primary-button small"
+                  className="review-decision-button"
                 >
                   Review Decision
                   <ArrowRight size={15} />
                 </Link>
+
               </div>
-            </div>
+
+            </article>
+
           ))}
+
         </div>
+
       )}
+
     </div>
   );
 }
