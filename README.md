@@ -1,16 +1,56 @@
-# React + Vite
+# 🧠 DecisionTrace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Your team remembers WHAT it decided.  
+> DecisionTrace remembers WHY.**
 
-Currently, two official plugins are available:
+DecisionTrace is an AI-powered organizational decision memory system that helps teams remember the reasoning behind their decisions and identify when the assumptions behind old decisions may no longer hold.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Think of it as a **memory box for your team's decisions.** 🧠📦
 
-## React Compiler
+It doesn't make decisions for your team.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+It helps your team **remember, understand, and review decisions.**
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# 🧒 Imagine This...
+
+Imagine your team is building an application.
+
+One day, everyone agrees:
+
+> 💬 "Let's use PostgreSQL!"
+
+Everyone is happy. The project moves forward.
+
+But months later...
+
+Someone asks:
+
+> 🤔 "Why did we choose PostgreSQL?"
+
+And suddenly...
+
+Nobody remembers. 😭
+
+Maybe it was because:
+
+- Heavy analytics were expected
+- The team needed a relational database
+- PostgreSQL was compared with other options
+- Certain project requirements existed at that time
+
+But that context is now buried somewhere in meetings, documents, chats, or someone's memory.
+
+### That's where DecisionTrace comes in.
+
+It remembers the **story behind the decision.**
+
+---
+
+# 🎯 The Big Idea
+
+Most systems remember:
+
+```text
+WHAT happened
