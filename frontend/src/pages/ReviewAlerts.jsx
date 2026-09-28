@@ -13,24 +13,25 @@ function ReviewAlerts({ decisions }) {
   const [error, setError] = useState("");
 
   async function handleReview() {
-    if (!newInformation.trim()) {
-      return;
-    }
+    if (!newInformation.trim()) return;
 
     setLoading(true);
     setError("");
     setAnalysis("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/review/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          new_information: newInformation.trim(),
-        }),
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8000/review/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            new_information: newInformation.trim(),
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to review decisions");
@@ -41,7 +42,9 @@ function ReviewAlerts({ decisions }) {
       setAnalysis(result.analysis);
     } catch (error) {
       console.error(error);
-      setError("Could not connect to the DecisionTrace backend.");
+      setError(
+        "Could not connect to the DecisionTrace backend."
+      );
     } finally {
       setLoading(false);
     }
@@ -52,9 +55,10 @@ function ReviewAlerts({ decisions }) {
       <div className="page-header">
         <div>
           <div className="eyebrow">DECISION HEALTH</div>
-            <h1>Review Alerts test</h1>
+          <h1>Review Alerts</h1>
           <p>
-            Decisions whose assumptions may no longer match current conditions.
+            Decisions whose assumptions may no longer match
+            current conditions.
           </p>
         </div>
       </div>
@@ -63,13 +67,15 @@ function ReviewAlerts({ decisions }) {
         <h2>Check for Decision Decay</h2>
 
         <p>
-          Enter new information to check whether it may affect previous
-          decisions.
+          Enter new information to check whether it may affect
+          previous decisions.
         </p>
 
         <textarea
           value={newInformation}
-          onChange={(event) => setNewInformation(event.target.value)}
+          onChange={(event) =>
+            setNewInformation(event.target.value)
+          }
           placeholder="Example: Analytics requirements have decreased significantly."
           rows={4}
         />
@@ -101,7 +107,10 @@ function ReviewAlerts({ decisions }) {
       ) : (
         <div className="alert-list">
           {reviewDecisions.map((decision) => (
-            <div className="large-alert-card" key={decision.id}>
+            <div
+              className="large-alert-card"
+              key={decision.id}
+            >
               <div className="large-alert-icon">
                 <AlertTriangle size={21} />
               </div>
