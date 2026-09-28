@@ -1,1 +1,11 @@
-#add api
+from fastapi import APIRouter
+from models.schemas import AskRequest, AskResponse
+
+router = APIRouter()
+
+
+@router.post("/", response_model=AskResponse)
+def ask_question(request: AskRequest):
+    return AskResponse(
+        answer=f"Your question was received: {request.question}"
+    )
