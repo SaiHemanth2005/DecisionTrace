@@ -24,7 +24,7 @@ function NewDecision({ onAddDecision, projects }) {
     }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const splitLines = (value) =>
@@ -52,7 +52,7 @@ function NewDecision({ onAddDecision, projects }) {
       decayMessage: "",
     };
 
-    const savedDecision = onAddDecision(newDecision);
+    const savedDecision = await onAddDecision(newDecision);
     navigate(`/decisions/${savedDecision.id}`);
   }
 
