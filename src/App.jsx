@@ -117,41 +117,49 @@ function App() {
      ADD NEW DECISION
   ========================================= */
 
-  function addDecision(newDecision) {
 
-    const existingIds = decisions
-      .map((decision) => Number(decision.id))
-      .filter(Number.isFinite);
+async function addDecision(newDecision) {
+  const response = await fetch("http://127.0.0.1:8000/decisions/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      decision: newDecision.title,
+      reason: newDecision.reason,
+      assumptions: newDecision.assumptions,
+      alternatives: newDecision.alternatives.map(
+        (alternative) => alternative.name
+      ),
+      stakeholders: [newDecision.owner],
+    }),
+  });
 
-
-    const nextId = String(
-      Math.max(0, ...existingIds) + 1
-    ).padStart(3, "0");
-
-
-    const savedDecision = {
-      ...newDecision,
-      id: nextId,
-    };
-
-
-    const updatedDecisions = [
-      savedDecision,
-      ...decisions,
-    ];
-
-
-    setDecisions(updatedDecisions);
-
-
-    localStorage.setItem(
-      "decisiontrace-decisions",
-      JSON.stringify(updatedDecisions)
-    );
-
-
-    return savedDecision;
+  if (!response.ok) {
+    throw new Error("Failed to save decision to backend");
   }
+
+  const result = await response.json();
+
+  const savedDecision = {
+    ...newDecision,
+    id: String(Date.now()),
+  };
+
+  const updatedDecisions = [
+    savedDecision,
+    ...decisions,
+  ];
+
+  setDecisions(updatedDecisions);
+
+  localStorage.setItem(
+    "decisiontrace-decisions",
+    JSON.stringify(updatedDecisions)
+  );
+
+  return savedDecision;
+}
 
 
   /* =========================================
